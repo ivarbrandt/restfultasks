@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpService } from './http.service';
 import { Task } from './models/task.interface';
 
@@ -7,7 +7,7 @@ import { Task } from './models/task.interface';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
   tasks: Task[] = [];
   newTask: Task = {
@@ -16,33 +16,37 @@ export class AppComponent {
     completed: false
   };
   selectedTask: Task;
-  constructor(private HttpService: HttpService) {}
+  constructor(private httpService: HttpService) {}
 
+  ngOnInit() {
+    this.getAllTasks();
+  }
 
-// getAllTasks() {
-//   this.HttpService.index().subscribe(data => { this.tasks = data;
-//   });
-// }
-// getOneTask(id: string) {
-//   this.HttpService.find(id).subscribe(data => {
-//     this.selectedTask = data;
-//   });
-// }
-// createTask() {
-//   this.HttpService.create(this.newTask).subscribe(data => {
-//     this.tasks.push(data);
-//     this.newTask = {
-//       title: '',
-//       description: '',
-//       completed: false
-//     };
-//   });
-// }
+getAllTasks() {
+  this.httpService.index().subscribe(data => {
+    this.tasks = data;
+  });
+}
+getOneTask(id: string) {
+  this.httpService.find(id).subscribe(data => {
+    this.selectedTask = data;
+  });
+}
+createTask() {
+  this.httpService.create(this.newTask).subscribe(data => {
+    this.tasks.push(data);
+    this.newTask = {
+      title: '',
+      description: '',
+      completed: false
+    };
+  });
+}
 // updateTask(task: Task) {
 //   this.HttpService.update(task).subscribe(data => {
 
-//   })
+//   });
 // }
 
 
-// }
+}

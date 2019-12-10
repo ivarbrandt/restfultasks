@@ -2,7 +2,10 @@ const Task = require("../models/task.js");
 
 module.exports.index = function(req, res) {
   Task.find()
-    .then(Tasks => res.json(Tasks))
+    .then(tasks => {
+      console.log(tasks);
+      return res.json(tasks);
+    })
     .catch(err => res.json(err));
 };
 
