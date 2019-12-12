@@ -17,6 +17,7 @@ export class HttpService {
     return this.http.get<Task>(`/api/tasks/${id}`);
   }
   update(task: Task) {
+    console.log(task);
     return this.http.put<Task>(`/api/tasks/${task._id}`, task);
   }
   create(task: Task) {

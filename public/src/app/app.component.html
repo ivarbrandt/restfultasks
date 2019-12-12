@@ -1,18 +1,29 @@
 <div class="container">
   <h1>RESTFUL TASKS API</h1>
 
+  <form>
+  Title: <input type="text" name="title" [(ngModel)]="newTask.title" />
+  Description: <input type="text" name="description" [(ngModel)]="newTask.description" />
+  Completed: <input type="checkbox" name="completed" [(ngModel)]="newTask.completed" />
+  <button (click)="createTask()">Create Task</button>
+</form>
+
   <button (click)="getAllTasks()">Get ALL Tasks</button>
 
   <ul *ngFor="let task of tasks">
-    <li> {{ task.title }} <button (click)="getOneTask(task._id)">SHOW</button></li>
+    <li> {{ task.title }} <button (click)="getOneTask(task._id)">SHOW</button><button (click)="deleteTask(task._id)">Delete</button></li>
   </ul>
 
-  <h3>All the tasks</h3>
-  <ul *ngFor="let task of tasks">
-    <li>{{ task.title }} - {{ task.description }}</li>
-  </ul>
+
+
 
 <h3 *ngIf="selectedTask">{{ selectedTask.title }}</h3>
 <h3 *ngIf="selectedTask">{{ selectedTask.description }}</h3>
 
-
+<form *ngIf="selectedTask" (submit)="updateTask()">
+  Title: <input type="text" name="title" [(ngModel)]="selectedTask.title" />
+  Description: <input type="text" name="description" [(ngModel)]="selectedTask.description" />
+  Completed: <input type="checkbox" name="completed" [(ngModel)]="selectedTask.completed" />
+  <input type="submit" value="Edit Task" />
+  <p> {{ selectedTask | json }} </p>
+</form>

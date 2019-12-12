@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // this.getAllTasks();
+    // this.newTask = {title: '', description: '', completed: false};
   }
 
 getAllTasks() {
@@ -42,11 +43,28 @@ createTask() {
     };
   });
 }
-// updateTask(task: Task) {
-//   this.HttpService.update(task).subscribe(data => {
-
-//   });
-// }
-
-
+updateTask() {
+  this.httpService.update(this.selectedTask).subscribe(data => {
+    // given this,selectedtask's id, find the corresponding task in this.tasks
+    const index = this.tasks.findIndex(task => task._id === this.selectedTask._id);
+    // grab its index, then set that index in this.tasks array to this.selectedTask
+    this.tasks[index] = this.selectedTask;
+    // this.selectedTask = this.
+    this.selectedTask = { title: '', description: '', completed: false };
+    console.log(this.newTask);
+  });
 }
+
+deleteTask(id: string) {
+  this.httpService.delete(id).subscribe();
+  this.httpService.index().subscribe(data => {
+    this.tasks = data;
+  });
+  }
+}
+
+
+
+
+
+
